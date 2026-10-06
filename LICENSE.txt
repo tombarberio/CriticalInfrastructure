@@ -1,0 +1,16 @@
+Copyright (c) 2026 TBar Solutions, LLC. All Rights Reserved.
+
+This repository and all of its contents — including but not limited to HTML,
+CSS, and JavaScript source code, instructional design, case narratives,
+character names, scenario text, and any associated media — are the
+proprietary property of TBar Solutions, LLC.
+
+No permission is granted to copy, reproduce, modify, publish, distribute,
+sublicense, or otherwise use this material, in whole or in part, for any
+purpose without the express prior written consent of TBar Solutions, LLC.
+
+This repository is made publicly viewable solely to support hosting via
+GitHub Pages for use in an authorized educational course. Public visibility
+does not constitute a license or grant of rights of any kind.
+
+For permission requests, contact TBar Solutions, LLC.
