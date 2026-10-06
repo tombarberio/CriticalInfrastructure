@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSINT Resources for Critical Infrastructure Vulnerability Assessment</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #1b2636;
+      --navy-2: #243447;
+      --gold: #c4a35a;
+      --cream: #f6f1e6;
+      --page: #fffdf8;
+      --ink: #1f2430;
+      --muted: #5c6573;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1200px 600px at 20% 0%, #2c3d55 0%, transparent 55%),
+        linear-gradient(160deg, #121820 0%, #1b2636 50%, #0e131a 100%);
+      font-family: Lato, sans-serif;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 28px 16px 48px;
+    }
+    .course-label {
+      color: var(--gold);
+      letter-spacing: .22em;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    h1.page-title {
+      font-family: "Playfair Display", serif;
+      color: #f4efe4;
+      font-weight: 700;
+      font-size: clamp(22px, 3vw, 34px);
+      margin: 0 0 6px;
+      text-align: center;
+    }
+    .sub {
+      color: #c9d2de;
+      margin: 0 0 22px;
+      text-align: center;
+      font-weight: 300;
+    }
+    .stage {
+      width: min(920px, 100%);
+      perspective: 2200px;
+    }
+    .book {
+      position: relative;
+      width: 100%;
+      height: min(620px, 78vh);
+      transform-style: preserve-3d;
+    }
+    .page {
+      position: absolute;
+      inset: 0;
+      background: var(--page);
+      border-radius: 4px 14px 14px 4px;
+      box-shadow:
+        18px 22px 40px rgba(0,0,0,.38),
+        inset 0 0 0 1px rgba(196,163,90,.28);
+      padding: 42px 52px 36px 58px;
+      display: none;
+      overflow: hidden;
+      transform-origin: left center;
+    }
+    .page::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 18px;
+      background: linear-gradient(90deg, #d9d0be, transparent 80%);
+    }
+    .page.active { display: block; animation: openIn .45s ease; }
+    .page.turn-out { display: block; animation: turnOut .42s ease forwards; }
+    .page.turn-in { display: block; animation: turnIn .42s ease; }
+    @keyframes openIn {
+      from { transform: rotateY(-12deg); opacity: .4; }
+      to { transform: rotateY(0); opacity: 1; }
+    }
+    @keyframes turnOut {
+      to { transform: rotateY(-90deg); opacity: 0; }
+    }
+    @keyframes turnIn {
+      from { transform: rotateY(90deg); opacity: 0; }
+      to { transform: rotateY(0); opacity: 1; }
+    }
+    .cover {
+      background:
+        linear-gradient(180deg, rgba(27,38,54,.18), rgba(27,38,54,.08)),
+        var(--page);
+      text-align: center;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .cover.active { display: flex; }
+    .rule {
+      width: 88px;
+      height: 3px;
+      background: var(--gold);
+      margin: 14px auto 18px;
+    }
+    .cover h2 {
+      font-family: "Playfair Display", serif;
+      font-size: 34px;
+      margin: 0 18px 10px;
+      color: var(--navy);
+    }
+    .cover p { max-width: 520px; color: var(--muted); line-height: 1.55; }
+    .eyebrow {
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .num {
+      position: absolute;
+      top: 22px;
+      right: 28px;
+      font-size: 12px;
+      color: var(--gold);
+      letter-spacing: .12em;
+    }
+    .term {
+      font-family: "Playfair Display", serif;
+      font-size: 30px;
+      color: var(--navy);
+      margin: 8px 0 6px;
+    }
+    .org {
+      color: var(--gold);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .syn {
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: 17px;
+      margin: 0 0 22px;
+    }
+    a.link {
+      display: inline-block;
+      color: #16385f;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 2px;
+      word-break: break-all;
+    }
+    .footer-line {
+      position: absolute;
+      left: 58px;
+      right: 36px;
+      bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .nav {
+      margin-top: 18px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    button {
+      background: var(--navy-2);
+      color: #f6f1e6;
+      border: 1px solid var(--gold);
+      padding: 10px 18px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: Lato, sans-serif;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    button:disabled { opacity: .35; cursor: default; }
+    .count { color: #d7deea; font-size: 13px; min-width: 72px; text-align: center; }
+    .hint { color: #9aa6b5; font-size: 13px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="course-label">Protecting Critical Infrastructure</div>
+  <h1 class="page-title">OSINT Resource Book</h1>
+  <p class="sub">Professor Tom Barberio &nbsp;·&nbsp; Click to turn the page</p>
+
+  <div class="stage">
+    <div class="book" id="book"></div>
+  </div>
+  <div class="nav">
+    <button id="prev" type="button">Previous</button>
+    <div class="count" id="count">1 / 13</div>
+    <button id="next" type="button">Next Page</button>
+  </div>
+  <div class="hint">Use the buttons or the left and right arrow keys.</div>
+
+<script>
+const pages = [
+  {
+    cover: true,
+    title: "Open Source Intelligence Resources",
+    body: "A field book for students conducting critical infrastructure vulnerability assessments. Official and public sources, one page at a time. Use only lawful, ethical, publicly available information."
+  },
+  {
+    title: "How to use this book",
+    org: "Course guidance",
+    link: "",
+    syn: "For every source you add to your own file, record the name, where you found it, why you chose it, and the agency or organization behind it. These ten pages are starting points, not a closed list. Do not collect private data, do not attempt unauthorized access, and do not treat a tool listing as permission. OSINT for this course means published, open, and properly attributed material that helps you identify assets, threats, vulnerabilities, and consequences."
+  },
+  {
+    title: "CISA Resources and Tools",
+    org: "Cybersecurity and Infrastructure Security Agency, U.S. Department of Homeland Security",
+    link: "https://www.cisa.gov/resources-tools",
+    syn: "Use this catalog to find sector-specific guidance, vulnerability assessment approaches, Shields Up advisories, and infrastructure resilience material written for owners and operators. Start here when you need the federal coordinator’s public view of a sector, a known campaign, or a recommended assessment method."
+  },
+  {
+    title: "Homeland Security Digital Library",
+    org: "Naval Postgraduate School Center for Homeland Defense and Security, with DHS and FEMA sponsorship",
+    link: "https://www.hsdl.org/",
+    syn: "Search peer policy papers, after-action reviews, national strategies, and academic studies on critical infrastructure protection. Students at U.S. institutions can often request fuller access. Use it to ground a vulnerability paper in documented cases rather than news clips alone."
+  },
+  {
+    title: "NIST SP 800-30 Rev. 1",
+    org: "National Institute of Standards and Technology",
+    link: "https://csrc.nist.gov/pubs/sp/800/30/r1/final",
+    syn: "This guide is the standard public method for conducting risk assessments. Use it to structure threat sources, vulnerabilities, likelihood, and impact so your write-up matches the language used by operators and auditors. Pair it with the NIST Cybersecurity Framework when you need control categories."
+  },
+  {
+    title: "FEMA Independent Study Catalog",
+    org: "Federal Emergency Management Agency, Emergency Management Institute",
+    link: "https://training.fema.gov/is/",
+    syn: "Use the IS course list for free, official modules on infrastructure protection, incident management, and after-action reporting. These courses are useful when you need a government definition, a planning step, or a standard form of words for roles and responsibilities."
+  },
+  {
+    title: "Bellingcat Online Investigation Toolkit",
+    org: "Bellingcat, independent investigative journalism organization",
+    link: "https://bellingcat.gitbook.io/toolkit",
+    syn: "A curated map of open tools for satellite imagery, geolocation, image verification, transport tracking, company records, and archiving. Use the category pages to choose a method, then read the caveats. Inclusion is not an endorsement. Stay inside lawful public sources."
+  },
+  {
+    title: "OSINT Framework",
+    org: "OSINT Framework, community-maintained index",
+    link: "https://osintframework.com/",
+    syn: "A branching index of open-source collection paths: domains, people, geospatial, documents, and infrastructure. Use it as a checklist when you are stuck, then go to the originating site and record who actually publishes the data."
+  },
+  {
+    title: "Internet Archive Wayback Machine",
+    org: "Internet Archive, nonprofit digital library",
+    link: "https://web.archive.org/",
+    syn: "Capture prior versions of operator websites, incident statements, maps, and policy pages. Use it to show how an organization described an asset or a failure before the page was edited, and to preserve a citation if a source later disappears."
+  },
+  {
+    title: "ICANN Lookup",
+    org: "Internet Corporation for Assigned Names and Numbers",
+    link: "https://lookup.icann.org/",
+    syn: "Use this public registration lookup to identify domain registrars, creation dates, and published abuse contacts for infrastructure-related websites. It is a first-pass source for mapping the public face of an operator, not a substitute for lawful process when records are redacted."
+  },
+  {
+    title: "NASA Worldview",
+    org: "National Aeronautics and Space Administration",
+    link: "https://worldview.earthdata.nasa.gov/",
+    syn: "Near-real-time satellite layers for fires, storms, floods, smoke, and land change. Use it to corroborate physical effects around plants, ports, pipelines, and rights of way, and to date imagery when you assess environmental or weather-driven infrastructure risk."
+  },
+  {
+    title: "OFAC Sanctions List Search",
+    org: "Office of Foreign Assets Control, U.S. Department of the Treasury",
+    link: "https://sanctionssearch.ofac.treas.gov/",
+    syn: "Search published sanctions designations for persons, vessels, and entities. Use it when a vulnerability assessment must consider prohibited counterparties, maritime ownership, or known threat networks that intersect a sector’s supply chain."
+  },
+  {
+    title: "MarineTraffic",
+    org: "MarineTraffic, commercial AIS platform with a public map layer",
+    link: "https://www.marinetraffic.com/",
+    syn: "Track publicly broadcast vessel positions, ports, and historical movement. Use it to understand shipping concentration, anchorage patterns, and disruption around ports and sea lanes. Treat the public layer as open maritime awareness, not as classified tracking, and record the platform as a commercial source."
+  },
+  {
+    title: "New York Corporation and Business Entity Database",
+    org: "New York State Department of State, Division of Corporations",
+    link: "https://apps.dos.ny.gov/publicInquiry/",
+    syn: "Search filings for New York corporations, LLCs, limited partnerships, and assumed names. Use it to confirm legal name, status, filing history, and service-of-process address when an operator, vendor, or holding company sits in the New York records. Record the Department of State as the source. Do not treat the database as a guarantee of current accuracy."
+  },
+  {
+    title: "Florida Sunbiz Corporation Search",
+    org: "Florida Department of State, Division of Corporations",
+    link: "https://search.sunbiz.org/Inquiry/CorporationSearch/ByName",
+    syn: "Search Florida business entities by name, including officers, registered agents, and document images when posted. Use it for operators and vendors registered in Florida. Sunbiz is the official public index. Cite the Division of Corporations and note the date you pulled the record."
+  },
+  {
+    title: "FBI Crime Data Explorer",
+    org: "Federal Bureau of Investigation, Uniform Crime Reporting Program",
+    link: "https://cde.ucr.cjis.gov/",
+    syn: "Official national, state, and agency-level crime statistics submitted through UCR and NIBRS. Use it when a vulnerability assessment needs reported crime context around a facility, a transit system, or a city, including trend tables and downloads. Participation varies by agency, so state the coverage limits in your paper."
+  },
+  {
+    title: "National Sex Offender Public Website",
+    org: "U.S. Department of Justice",
+    link: "https://www.nsopw.gov/",
+    syn: "The official national public search that queries participating state, territorial, and tribal registries. Use it only for lawful public-safety and community-risk context. Do not use the site to harass, stalk, or intimidate anyone. Follow the site’s own terms. For course work, describe method and source. Do not publish personal registry details in slides or posts."
+  },
+  {
+    title: "Free Naloxone and Overdose Response Locations",
+    org: "NEXT Distro (national mail and site locator) and CDC Stop Overdose guidance",
+    link: "https://nextdistro.org/",
+    syn: "Use NEXT Distro to find programs that mail or distribute free naloxone, and pair it with CDC guidance at https://www.cdc.gov/stopoverdose/naloxone/index.html. For this course, treat naloxone access as a public-health layer around facilities, campuses, and transit hubs. It is not an investigative targeting tool. Local health departments in New York and Florida also publish site lists; cite the health agency when you use those maps."
+  }
+];
+
+const book = document.getElementById('book');
+let i = 0;
+
+function render(idx, dir) {
+  const p = pages[idx];
+  const el = document.createElement('section');
+  el.className = 'page' + (p.cover ? ' cover' : '') + (dir === 'next' ? ' turn-in' : dir === 'prev' ? ' turn-in' : ' active');
+  if (p.cover) {
+    el.innerHTML = `
+      <div class="eyebrow">Protecting Critical Infrastructure</div>
+      <div class="rule"></div>
+      <h2>${p.title}</h2>
+      <p>${p.body}</p>
+      <div class="footer-line"><span>Prof. Tom Barberio</span><span>OSINT Field Book</span></div>`;
+  } else {
+    el.innerHTML = `
+      <div class="num">${String(idx).padStart(2,'0')}</div>
+      <div class="eyebrow">OSINT source</div>
+      <div class="term">${p.title}</div>
+      <div class="org">${p.org}</div>
+      <p class="syn">${p.syn}</p>
+      ${p.link ? `<a class="link" href="${p.link}" target="_blank" rel="noopener">${p.link}</a>` : ''}
+      <div class="footer-line"><span>Turn the page</span><span>${idx} of ${pages.length-1}</span></div>`;
+  }
+  book.innerHTML = '';
+  book.appendChild(el);
+  requestAnimationFrame(() => el.classList.add('active'));
+  document.getElementById('count').textContent = `${idx+1} / ${pages.length}`;
+  document.getElementById('prev').disabled = idx === 0;
+  document.getElementById('next').disabled = idx === pages.length-1;
+}
+
+document.getElementById('next').onclick = () => { if (i < pages.length-1) { i++; render(i,'next'); } };
+document.getElementById('prev').onclick = () => { if (i > 0) { i--; render(i,'prev'); } };
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' && i < pages.length-1) { i++; render(i,'next'); }
+  if (e.key === 'ArrowLeft' && i > 0) { i--; render(i,'prev'); }
+});
+render(0);
+</script>
+</body>
+</html>
